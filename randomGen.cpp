@@ -9,8 +9,6 @@ int main(int argc, char* argv[]) {
     
     int n = atoi(argv[1]);
     
-    cout << n << " " << n << " ";
-    
     unordered_set<int> numbers;
     
     while (numbers.size() < n) {

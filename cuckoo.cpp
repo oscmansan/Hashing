@@ -78,16 +78,15 @@ private:
 };
 
 int main() {
-    int m;
-    cin >> m;
-    
-    Cuckoo cuckoo(m);
-    
+    vector<int> input;
     int n;
-    cin >> n;
-    for (int i = 0; i < n; ++i) {
-	int k;
-	cin >> k;
+    while (cin >> n) {
+	input.push_back(n);
+    }
+    
+    Cuckoo cuckoo(input.size());
+    
+    for (int k : input) {
 	if (!cuckoo.insert(k,0)) break;
     }
     
