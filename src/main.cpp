@@ -2,10 +2,12 @@
 #include <istream>
 #include <fstream>
 #include <vector>
+#include <chrono>
 
 #include "BloomFilter.h"
 
 using namespace std;
+using namespace std::chrono;
 
 void usage();
 void bloomFilter();
@@ -17,7 +19,7 @@ int main(int argc, char **argv)
 {
     if(argc < 3) usage();
 
-    // Llegir input ////////////////////////////////////
+    // READ INPUT ////////////////////////////////////
     int n;
     ifstream inDict(argv[1]); //Llegir paraules diccionari
     while (inDict >> n) dictWords.push_back(n);
@@ -25,8 +27,23 @@ int main(int argc, char **argv)
     while (inText >> n) textWords.push_back(n);
     /////////////////////////////////////////////////////
 
-    //BloomFilter
-    bloomFilter();
+
+
+    // EXPERIMENTS /////////////////////////////////////
+
+    //Time stuff
+    clock_t start = clock();
+    double seconds = 0;
+    //
+
+    // BloomFilter ///////////////////
+    start = clock();
+    bloomFilter(); //Execute BloomFilter
+    seconds = double(clock() - start) / CLOCKS_PER_SEC;
+    cout << "Temps que triga el BloomFilter: " << seconds << " segons." << endl; //Print time
+    //////////////////////////////////
+
+    /////////////////////////////////////////////////////
 
     return 0;
 }

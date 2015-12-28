@@ -1,6 +1,6 @@
 all: bin/main.exe bin/genDictionary.exe bin/genText.exe
 
-bin/main.exe: obj/bloom.o
+bin/main.exe: src/main.cpp obj/bloom.o
 	g++ --std=c++11 src/main.cpp obj/bloom.o -o bin/main.exe
 
 obj/bloom.o: src/BloomFilter.h src/BloomFilter.cpp
@@ -14,4 +14,4 @@ bin/genText.exe: src/genText.cpp
 
 
 clean:
-	rm -rf bin/*.exe obj/*.o
+	rm -rf obj/*.o bin/*.exe
