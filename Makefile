@@ -1,17 +1,17 @@
-all: main.exe genDictionary.exe genText.exe
+all: bin/main.exe bin/genDictionary.exe bin/genText.exe
 
-main.exe: bloom.o
-	g++ --std=c++11 main.cpp bloom.o -o main.exe
+bin/main.exe: obj/bloom.o
+	g++ --std=c++11 src/main.cpp obj/bloom.o -o bin/main.exe
 
-bloom.o: BloomFilter.h BloomFilter.cpp
-	g++ --std=c++11 -c BloomFilter.cpp -o bloom.o
+obj/bloom.o: src/BloomFilter.h src/BloomFilter.cpp
+	g++ --std=c++11 -c src/BloomFilter.cpp -o obj/bloom.o
 
-genDictionary.exe: genDictionary.cpp
-	g++ -std=c++11 genDictionary.cpp -o genDictionary.exe
+bin/genDictionary.exe: src/genDictionary.cpp
+	g++ -std=c++11 src/genDictionary.cpp -o bin/genDictionary.exe
 
-genText.exe: genText.cpp
-	g++ -std=c++11 genText.cpp -o genText.exe
+bin/genText.exe: src/genText.cpp
+	g++ -std=c++11 src/genText.cpp -o bin/genText.exe
 
 
 clean:
-	rm -rf *.exe *.o
+	rm -rf bin/*.exe obj/*.o
