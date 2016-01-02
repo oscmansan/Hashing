@@ -6,6 +6,7 @@
 
 #include "Dictionary.h"
 #include "BloomFilter.h"
+#include "CuckooHashing.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -36,6 +37,8 @@ int main(int argc, char **argv)
 
     vector<Dictionary*> dics;
     dics.push_back(new BloomFilter(BFNumHashes, BFNumVectors, BFNumBits));
+    
+    dics.push_back(new CuckooHashing(textWords.size()));
     /////////////////////////////////////////////////////
 
 
