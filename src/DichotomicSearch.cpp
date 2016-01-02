@@ -1,16 +1,15 @@
 #include "DichotomicSearch.h"
 #include <iostream>
+
 using namespace std;
     
 DichotomicSearch::DichotomicSearch() : Dictionary("DichotomicSearch") 
 {
-	sorted = true;
 }
 
 void DichotomicSearch::insert(int k) 
 {
-	sorted = false;
-    elements.push_back(k);
+    elements.push_back(k); cout << "insert " << k << endl;
 }
 
 int DichotomicSearch::quickSortPartition (vector<int> &arr, int l, int r)
@@ -22,12 +21,12 @@ int DichotomicSearch::quickSortPartition (vector<int> &arr, int l, int r)
     {
         if (arr[j] <= x)
         {
-            i++;    
+            i++;
             swap(arr[i], arr[j]); 
         }
     }
 
-    swap(arr[i + 1], arr[r]);  
+    swap(arr[i + 1], arr[r]);
     return (i + 1);
 }
  
@@ -55,11 +54,12 @@ bool DichotomicSearch::search(int k, int l, int r)
 
 bool DichotomicSearch::contains(int k) 
 {
-	if (not sorted) 
-	{
-		quickSort(elements,0,elements.size());
-		sorted = true;
-	}
-	
 	return search(k, 0, elements.size());
+}
+
+void DichotomicSearch::onAllInserted()
+{
+    for(int i = 0; i < elements.size(); ++i) cout << elements[i] << ", "; cout << endl;
+    quickSort(elements,0,elements.size());
+    for(int i = 0; i < elements.size(); ++i) cout << elements[i] << ", "; cout << endl;
 }

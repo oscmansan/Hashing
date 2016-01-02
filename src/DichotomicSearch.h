@@ -9,10 +9,9 @@ using namespace std;
 class DichotomicSearch : public Dictionary
 {
 private:
-    bool sorted;
     vector<int> elements;
     void quickSort(vector<int> &arr, int l, int r);
-    int quickSortPartition(vector<int> &arr, int l, int r);
+    int  quickSortPartition(vector<int> &arr, int l, int r);
     bool search(int  k, int l, int r);
 
 public:
@@ -24,6 +23,8 @@ public:
 
     //Diu si la taula de hash conte la clau k
     bool contains(int k);
+
+    void onAllInserted();
 };
 
 #endif // DICHOTOMICSEARCH_H

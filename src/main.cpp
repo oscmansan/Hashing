@@ -18,7 +18,6 @@ void bloomFilter();
 vector<int> dictWords; //Contindra les paraules del diccionari
 vector<int> textWords; //Contindra les paraules del text
 
-
 int main(int argc, char **argv)
 {
     if(argc < 3) usage();
@@ -32,16 +31,13 @@ int main(int argc, char **argv)
     /////////////////////////////////////////////////////
 
     // CREAR DICCIONARIS ////////////////////////////////
+    vector<Dictionary*> dics;
+    dics.push_back(new DichotomicSearch());
+    dics.push_back(new CuckooHashing(dictWords.size()));
+
     const int BFNumBits    = 5000;
     const int BFNumVectors = 2;
     const int BFNumHashes  = 2;
-
-    vector<Dictionary*> dics;
-    
-    dics.push_back(new DichotomicSearch());
-    
-    dics.push_back(new CuckooHashing(dictWords.size()));
-    
     dics.push_back(new BloomFilter(BFNumHashes, BFNumVectors, BFNumBits));
     /////////////////////////////////////////////////////
 
@@ -55,16 +51,25 @@ int main(int argc, char **argv)
         start = clock();
 
         for(int dw : dictWords) d->insert(dw);
-        cout << "Resultats " << d->name << ":" << endl;
+        d->onAllInserted();
+
+        seconds = double(clock() - start) / CLOCKS_PER_SEC;
+        cout << "Temps que triga el " << d->name << " en insertar: " << seconds << " segons.";
+        cout << endl << endl << endl;
+
+        start = clock();
+
+        cout << "Resultats: " << d->name << ":" << endl;
         for(int tw : textWords)
         {
-            if (d->contains(tw)) cout << "=====>  El text conte la paraula '" << tw << "'" << endl;
-            else cout << "El text NO conte la paraula '" << tw << "'" << endl;
+            if (d->contains(tw)) cout << "=====>  El diccionari conte la paraula '" << tw << "'" << endl;
+            else cout << "El diccionari NO conte la paraula '" << tw << "'" << endl;
         }
         cout << "___________________" << endl;
 
         seconds = double(clock() - start) / CLOCKS_PER_SEC;
-        cout << "Temps que triga el " << d->name << ": " << seconds << " segons." << endl << endl << endl; //Print time
+        cout << "Temps que triga el " << d->name << " en comprovar paraules text: " << seconds << " segons.";
+        cout << endl << endl << endl;
     }
     /////////////////////////////////////////////////////
 

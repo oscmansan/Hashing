@@ -13,6 +13,7 @@ public:
 
     virtual void insert(int n)   = 0;
     virtual bool contains(int n) = 0;
+    virtual void onAllInserted() {}
 };
 
 #endif // DICTIONARY_H
