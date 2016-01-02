@@ -57,7 +57,7 @@ int main(int argc, char **argv)
         cout << "Resultats " << d->name << ":" << endl;
         for(int dw : dictWords)
         {
-            if (d->contains(dw)) cout << "El text conte la paraula '" << dw << "'" << endl;
+            if (d->contains(dw)) cout << "=====>  El text conte la paraula '" << dw << "'" << endl;
             else cout << "El text NO conte la paraula '" << dw << "'" << endl;
         }
         cout << "___________________" << endl;

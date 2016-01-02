@@ -14,8 +14,8 @@ private:
     vector<int> T1;
     vector<int> T2;
 
-    int hash(int k, int i, bool t);
-    bool insert(int x, int i, int n);
+    int hash(int k, bool t);
+    bool insert(int x, int n);
     void printResult();
 
 public:
