@@ -7,6 +7,7 @@
 #include "Dictionary.h"
 #include "BloomFilter.h"
 #include "CuckooHashing.h"
+#include "DichotomicSearch.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -39,6 +40,8 @@ int main(int argc, char **argv)
     dics.push_back(new BloomFilter(BFNumHashes, BFNumVectors, BFNumBits));
     
     dics.push_back(new CuckooHashing(textWords.size()));
+
+    dics.push_back(new DichotomicSearch());
     /////////////////////////////////////////////////////
 
 
@@ -60,7 +63,7 @@ int main(int argc, char **argv)
         cout << "___________________" << endl;
 
         seconds = double(clock() - start) / CLOCKS_PER_SEC;
-        cout << "Temps que triga el " << d->name << ": " << seconds << " segons." << endl; //Print time
+        cout << "Temps que triga el " << d->name << ": " << seconds << " segons." << endl << endl << endl; //Print time
     }
     /////////////////////////////////////////////////////
 

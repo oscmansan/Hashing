@@ -6,7 +6,7 @@
 class Dictionary
 {
 protected:
-    Dictionary(std::string name) {this-> name = name;}
+    Dictionary(std::string name) : name(name) { }
 
 public:
     std::string name;
