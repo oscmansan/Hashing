@@ -13,10 +13,10 @@ private:
     int m, i;
     vector<int> T1;
     vector<int> T2;
+    vector<int> data;
 
     int hash(int k, bool t);
     bool insert(int x, int n);
-    void printResult();
 
 public:
 
@@ -28,6 +28,8 @@ public:
 
     //Diu si la taula de hash conte la clau k
     bool contains(int k);
+    
+    void printResult();
 };
 
 #endif // CUCKOOHASHING_H

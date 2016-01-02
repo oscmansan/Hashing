@@ -37,11 +37,12 @@ int main(int argc, char **argv)
     const int BFNumHashes  = 2;
 
     vector<Dictionary*> dics;
-    dics.push_back(new BloomFilter(BFNumHashes, BFNumVectors, BFNumBits));
     
-    dics.push_back(new CuckooHashing(textWords.size()));
-
     dics.push_back(new DichotomicSearch());
+    
+    dics.push_back(new CuckooHashing(dictWords.size()));
+    
+    dics.push_back(new BloomFilter(BFNumHashes, BFNumVectors, BFNumBits));
     /////////////////////////////////////////////////////
 
 
@@ -53,12 +54,12 @@ int main(int argc, char **argv)
     {
         start = clock();
 
-        for(int tw : textWords) d->insert(tw);
+        for(int dw : dictWords) d->insert(dw);
         cout << "Resultats " << d->name << ":" << endl;
-        for(int dw : dictWords)
+        for(int tw : textWords)
         {
-            if (d->contains(dw)) cout << "=====>  El text conte la paraula '" << dw << "'" << endl;
-            else cout << "El text NO conte la paraula '" << dw << "'" << endl;
+            if (d->contains(tw)) cout << "=====>  El text conte la paraula '" << tw << "'" << endl;
+            else cout << "El text NO conte la paraula '" << tw << "'" << endl;
         }
         cout << "___________________" << endl;
 
