@@ -10,7 +10,7 @@ class CuckooHashing : public Dictionary
 {
 private:
 
-    int m, i;
+    int m, i, bounces;
     vector<int> T1;
     vector<int> T2;
     vector<int> data;
@@ -30,6 +30,8 @@ public:
     bool contains(int k);
     
     void printResult();
+    
+    void printExtras(void *extra);
 };
 
 #endif // CUCKOOHASHING_H

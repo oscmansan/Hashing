@@ -1,5 +1,6 @@
 #include "DichotomicSearch.h"
 #include <iostream>
+#include <algorithm>
 using namespace std;
     
 DichotomicSearch::DichotomicSearch() : Dictionary("DichotomicSearch") { }
@@ -56,5 +57,6 @@ bool DichotomicSearch::contains(int k)
 
 void DichotomicSearch::onAllInserted() 
 {
-    quickSort(elements, 0, elements.size());
+    //quickSort(elements, 0, elements.size());
+    sort(elements.begin(), elements.end());
 }

@@ -5,8 +5,9 @@
 using namespace std;
 
 CuckooHashing::CuckooHashing(int M) : Dictionary("CuckooHashing") {
-    this->m = 4*M;//log10(M)*M;
+    this->m = 4*M; //log10(M)*M;
     this->i = 0;
+    this->bounces = 0;
 
     T1 = vector<int>(m,-1);
     T2 = vector<int>(m,-1);
@@ -38,12 +39,14 @@ bool CuckooHashing::insert(int x, int n) {
 	    T1[hash(x,true)] = x;
 	}
 	else {
+	    ++bounces;
 	    int y = T1[hash(x,true)];
 	    T1[hash(x,true)] = x;
 	    if (T2[hash(y,false)] == -1) {
 		T2[hash(y,false)] = y;
 	    }
 	    else {
+		++bounces;
 		int z = T2[hash(y,false)];
 		T2[hash(y,false)] = y;
 		return insert(z,n+1);
@@ -92,4 +95,9 @@ void CuckooHashing::printResult() {
 			cout << "| " << i << "\t| " << T2[i] << "\t|" << endl;
 	}
 	cout << "+-------+-------+" << endl;
+}
+
+void CuckooHashing::printExtras(void *extra) {
+    cout << "bounces = " << bounces << endl;
+    cout << "rehashes = " << i << endl;
 }

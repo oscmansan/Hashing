@@ -76,8 +76,11 @@ int main(int argc, char **argv)
         //cout << "___________________" << endl;
 
         seconds = double(clock() - start) / CLOCKS_PER_SEC;
-        cout << "Temps que triga el " << d->name << " en comprovar paraules text: " << seconds << " segons. Count: " << count  << endl << endl;
+        cout << "Temps que triga el " << d->name << " en comprovar paraules text: " << seconds << " segons. Count: " << count  << endl;
         //cout << endl << endl << endl;
+	
+	d->printExtras(&count);
+	cout << endl;
     }
     /////////////////////////////////////////////////////
 
