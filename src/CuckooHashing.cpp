@@ -1,9 +1,11 @@
 #include "CuckooHashing.h"
 #include <iostream>
+#include <cmath>
+
 using namespace std;
 
-CuckooHashing::CuckooHashing(int m) : Dictionary("CuckooHashing") {
-    this->m = m;
+CuckooHashing::CuckooHashing(int M) : Dictionary("CuckooHashing") {
+    this->m = 4*M;//log10(M)*M;
     this->i = 0;
 
     T1 = vector<int>(m,-1);
@@ -31,7 +33,7 @@ void CuckooHashing::insert(int k) {
 }
 
 bool CuckooHashing::insert(int x, int n) {
-    if (n < 1000) {
+    if (n < 100) {
 	if(T1[hash(x,true)] == -1) {
 	    T1[hash(x,true)] = x;
 	}
@@ -50,7 +52,7 @@ bool CuckooHashing::insert(int x, int n) {
 	return true;
     }
     else {
-	cout << "infinite loop when inserting " << x << endl;
+	//cout << "infinite loop when inserting " << x << endl;
 	return false;
     }
 }

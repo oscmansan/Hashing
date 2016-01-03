@@ -18,6 +18,8 @@ void bloomFilter();
 vector<int> dictWords; //Contindra les paraules del diccionari
 vector<int> textWords; //Contindra les paraules del text
 
+//10.000 -> 50.000.000 en 10 intervals
+
 int main(int argc, char **argv)
 {
     if(argc < 3) usage();
@@ -28,6 +30,10 @@ int main(int argc, char **argv)
     while (inDict >> n) dictWords.push_back(n);
     ifstream inText(argv[2]); //Llegir paraules text fins eof
     while (inText >> n) textWords.push_back(n);
+
+
+    cout << dictWords.size() << endl;
+    cout << textWords.size() << endl << endl;
     /////////////////////////////////////////////////////
 
     // CREAR DICCIONARIS ////////////////////////////////
@@ -35,9 +41,9 @@ int main(int argc, char **argv)
     dics.push_back(new DichotomicSearch());
     dics.push_back(new CuckooHashing(dictWords.size()));
 
-    const int BFNumBits    = 5000;
-    const int BFNumVectors = 2;
-    const int BFNumHashes  = 2;
+    const int BFNumBits    = dictWords.size() * 3;
+    const int BFNumVectors = 1;
+    const int BFNumHashes  = 1;
     dics.push_back(new BloomFilter(BFNumHashes, BFNumVectors, BFNumBits));
     /////////////////////////////////////////////////////
 
@@ -54,22 +60,24 @@ int main(int argc, char **argv)
         d->onAllInserted();
 
         seconds = double(clock() - start) / CLOCKS_PER_SEC;
-        cout << "Temps que triga el " << d->name << " en insertar: " << seconds << " segons.";
-        cout << endl << endl << endl;
+        cout << "Temps que triga el " << d->name << " en insertar: " << seconds << " segons." << endl;
+        //cout << endl << endl << endl;
 
         start = clock();
 
-        cout << "Resultats: " << d->name << ":" << endl;
+        //cout << "Resultats: " << d->name << ":" << endl;
+        int count = 0;
         for(int tw : textWords)
         {
-            if (d->contains(tw)) cout << "=====>  El diccionari conte la paraula '" << tw << "'" << endl;
-            else cout << "El diccionari NO conte la paraula '" << tw << "'" << endl;
+            if (d->contains(tw)) ++count;
+            // if (d->contains(tw)) cout << "=====>  El diccionari conte la paraula '" << tw << "'" << endl;
+            // else cout << "El diccionari NO conte la paraula '" << tw << "'" << endl;
         }
-        cout << "___________________" << endl;
+        //cout << "___________________" << endl;
 
         seconds = double(clock() - start) / CLOCKS_PER_SEC;
-        cout << "Temps que triga el " << d->name << " en comprovar paraules text: " << seconds << " segons.";
-        cout << endl << endl << endl;
+        cout << "Temps que triga el " << d->name << " en comprovar paraules text: " << seconds << " segons. Count: " << count  << endl << endl;
+        //cout << endl << endl << endl;
     }
     /////////////////////////////////////////////////////
 
