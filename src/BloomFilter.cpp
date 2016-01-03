@@ -4,6 +4,7 @@ BloomFilter::BloomFilter(int numHashes, int numVectors, int numBits) : Dictionar
 {
     bits = vector< vector<bool> >(numVectors, vector<bool>(numBits, false));
     this->numHashes = numHashes;
+    positivesCount = 0;
 }
 
 void BloomFilter::insert(int numberInput)
@@ -40,6 +41,8 @@ bool BloomFilter::contains(int numberInput)
         }
     }
 
+    ++positivesCount;
+
     //Tots els bits de tots els hashes de tots els vectors
     //els ha trobat a true
     //Es probable que numberInput estigui contingut
@@ -50,4 +53,10 @@ int BloomFilter::hash(int numberInput, int hashi, int vectori)
 {
     //Per cada combinacio (hashi, vectori) el hash resultant es diferent
     return (numberInput * (hashi+1) * (vectori+1)) % bits[0].size();
+}
+
+void BloomFilter::printExtras(void *extra)
+{
+    int realPositivesCount = *((int*) extra);
+    std::cout << "Tant percent de encert: " << (float(realPositivesCount)/positivesCount)<< std::endl;
 }

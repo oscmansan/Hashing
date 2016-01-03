@@ -14,6 +14,7 @@ public:
     virtual void insert(int n)   = 0;
     virtual bool contains(int n) = 0;
     virtual void onAllInserted() {}
+    virtual void printExtras(void *extra) {}
 };
 
 #endif // DICTIONARY_H

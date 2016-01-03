@@ -2,6 +2,7 @@
 #define BLOOMFILTER_H
 
 #include <vector>
+#include <iostream>
 #include "Dictionary.h"
 
 using namespace std;
@@ -12,6 +13,7 @@ private:
 
     vector< vector<bool> > bits;
     int numHashes, numVectors;
+    int positivesCount;
 
     //Calcula el hash pel nombre numberInput,
     // utilitzant la funcio de hash numero hashi
@@ -33,6 +35,8 @@ public:
 
     //Diu si aquest BloomFilter conte numberInput
     bool contains(int numberInput);
+
+    void printExtras(void *extra);
 };
 
 #endif // BLOOMFILTER_H
