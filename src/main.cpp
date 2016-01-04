@@ -38,19 +38,17 @@ int main(int argc, char **argv)
 
     // CREAR DICCIONARIS ////////////////////////////////
     vector<Dictionary*> dics;
-    dics.push_back(new DichotomicSearch());
-    dics.push_back(new CuckooHashing(dictWords.size()));
-
-    const int BFNumBits    = dictWords.size() * 3;
-    const int BFNumVectors = 1;
-    const int BFNumHashes  = 1;
-    dics.push_back(new BloomFilter(BFNumHashes, BFNumVectors, BFNumBits));
+    dics.push_back( new DichotomicSearch() );
+    dics.push_back( new CuckooHashing(dictWords.size()) );
+    dics.push_back( new BloomFilter(dictWords.size())   );
     /////////////////////////////////////////////////////
 
 
     // EXPERIMENTS //////////////////////////////////////
     clock_t start = clock();
     double seconds = 0;
+    int realCount = 0;
+    bool f = true;
 
     for(Dictionary *d : dics)
     {
@@ -66,10 +64,15 @@ int main(int argc, char **argv)
         start = clock();
 
         //cout << "Resultats: " << d->name << ":" << endl;
+
         int count = 0;
         for(int tw : textWords)
         {
-            if (d->contains(tw)) ++count;
+            if (d->contains(tw))
+            {
+                if(f) ++realCount;
+                ++count;
+            }
             // if (d->contains(tw)) cout << "=====>  El diccionari conte la paraula '" << tw << "'" << endl;
             // else cout << "El diccionari NO conte la paraula '" << tw << "'" << endl;
         }
@@ -79,8 +82,9 @@ int main(int argc, char **argv)
         cout << "Temps que triga el " << d->name << " en comprovar paraules text: " << seconds << " segons. Count: " << count  << endl;
         //cout << endl << endl << endl;
 	
-	d->printExtras(&count);
-	cout << endl;
+        d->printExtras(&realCount);
+        cout << endl;
+        f = false;
     }
     /////////////////////////////////////////////////////
 

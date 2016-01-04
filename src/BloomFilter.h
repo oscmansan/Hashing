@@ -11,24 +11,19 @@ class BloomFilter : public Dictionary
 {
 private:
 
-    vector< vector<bool> > bits;
-    int numHashes, numVectors;
+    vector<bool> bits;
     int positivesCount;
 
     //Calcula el hash pel nombre numberInput,
     // utilitzant la funcio de hash numero hashi
-    int hash(int numberInput, int hashi, int vectori);
+    int hash(int numberInput);
 
 public:
 
-    //input     = vector dels inputs
-    //numHashes  = nombre de hashes diferents a aplicar a cada input.
-    //numVectors = nombre de vectors de bits.
-    //             Quant mes gran menys probabilitat de fals positiu.
     //numBits    = quantitat de bits en cada vector de bits.
     //             Quant mes gran menys probabilitat de fals positiu.
     //             (tenint en compte el hash usat)
-    BloomFilter(int numHashes, int numVectors, int numBits);
+    BloomFilter(int dictCount);
 
     //Actualitza la taula de bits, fent hash amb numberInput
     void insert(int numberInput);
