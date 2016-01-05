@@ -20,8 +20,7 @@ void CuckooHashing::insert(int k)
     bool b = insert(k,0);
     while (not b)
     {
-        i = rand()%m;
-        cout << i << endl;
+        ++i;
 		T1 = vector<int>(m,-1);
 		T2 = vector<int>(m,-1);
 
@@ -40,7 +39,7 @@ bool CuckooHashing::insert(int xx, int n)
 {
     int x = xx;
     int initialBounces = bounces;
-    while(bounces - initialBounces < 100000)
+    while(bounces - initialBounces < 10000)
     {
         int h1 = hash(x, true);
         if(T1[h1] == -1)
@@ -55,7 +54,6 @@ bool CuckooHashing::insert(int xx, int n)
             ++bounces;
 
             int h2 = hash(last1, false);
-            cout << h1 << ", " << h2 << endl;
             if (T2[h2] == -1)
             {
                 T2[h2] = last1;
@@ -82,7 +80,7 @@ int CuckooHashing::hash(int k, bool t) {
 	if (t)
 		return (k*(i+1)) % m;
     else
-        return (int((sin(k*i)*0.5+0.5)*m) + i) % m;
+        return int((sin(k%(i+1))*0.5+0.5) * (k+1)) % m;
 }
 
 void CuckooHashing::printResult() {

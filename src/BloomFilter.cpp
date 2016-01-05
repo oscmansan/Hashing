@@ -24,7 +24,8 @@ bool BloomFilter::contains(int x)
 
 int BloomFilter::hash(int x, int i)
 {
-    return (x/(m*i+1)) % m;
+    if(i == 0) return x % m;
+    return (sin(x)*0.5+0.5) * m;
 }
 
 void BloomFilter::printExtras(void *extra)
