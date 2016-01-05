@@ -1,6 +1,8 @@
 #ifndef CUCKOOHASHING_H
 #define CUCKOOHASHING_H
 
+#include <cstdlib>
+#include <ctime>
 #include <vector>
 #include "Dictionary.h"
 

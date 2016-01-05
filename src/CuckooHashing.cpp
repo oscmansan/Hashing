@@ -11,14 +11,17 @@ CuckooHashing::CuckooHashing(int M) : Dictionary("CuckooHashing") {
 
     T1 = vector<int>(m,-1);
     T2 = vector<int>(m,-1);
+    srand(0);
 }
 
 void CuckooHashing::insert(int k) 
 {
     data.push_back(k);
     bool b = insert(k,0);
-    while (not b) {
-        i++;
+    while (not b)
+    {
+        i = rand()%m;
+        cout << i << endl;
 		T1 = vector<int>(m,-1);
 		T2 = vector<int>(m,-1);
 
@@ -37,10 +40,9 @@ bool CuckooHashing::insert(int xx, int n)
 {
     int x = xx;
     int initialBounces = bounces;
-    while(bounces - initialBounces < 10000000)
+    while(bounces - initialBounces < 100000)
     {
         int h1 = hash(x, true);
-        //cout << h1 << endl;
         if(T1[h1] == -1)
         {
             T1[h1] = x;
@@ -53,7 +55,7 @@ bool CuckooHashing::insert(int xx, int n)
             ++bounces;
 
             int h2 = hash(last1, false);
-            //cout << h2 << endl;
+            cout << h1 << ", " << h2 << endl;
             if (T2[h2] == -1)
             {
                 T2[h2] = last1;
@@ -79,8 +81,8 @@ bool CuckooHashing::contains(int k) {
 int CuckooHashing::hash(int k, bool t) {
 	if (t)
 		return (k*(i+1)) % m;
-	else
-        return (int(sin(k*i)*0.5+0.5)*m + int(cos(i)*0.5+0.5)*k) % m;
+    else
+        return (int((sin(k*i)*0.5+0.5)*m) + i) % m;
 }
 
 void CuckooHashing::printResult() {
