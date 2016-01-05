@@ -1,6 +1,7 @@
 #ifndef BLOOMFILTER_H
 #define BLOOMFILTER_H
 
+#include <cmath>
 #include <vector>
 #include <iostream>
 #include "Dictionary.h"
@@ -12,17 +13,14 @@ class BloomFilter : public Dictionary
 private:
 
     vector<bool> bits;
-    int positivesCount;
+    int positivesCount, m;
 
     //Calcula el hash pel nombre numberInput,
     // utilitzant la funcio de hash numero hashi
-    int hash(int numberInput);
+    int hash(int x,int i);
 
 public:
 
-    //numBits    = quantitat de bits en cada vector de bits.
-    //             Quant mes gran menys probabilitat de fals positiu.
-    //             (tenint en compte el hash usat)
     BloomFilter(int dictCount);
 
     //Actualitza la taula de bits, fent hash amb numberInput

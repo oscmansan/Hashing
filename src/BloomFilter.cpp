@@ -1,34 +1,34 @@
 #include "BloomFilter.h"
 
-BloomFilter::BloomFilter(int dictCount) : Dictionary("BloomFilter")
+BloomFilter::BloomFilter(int n) : Dictionary("BloomFilter")
 {
-    int m = dictCount * 4;
+    m = n*32;
     bits = vector<bool>(m, false);
     positivesCount = 0;
 }
 
-void BloomFilter::insert(int numberInput)
+void BloomFilter::insert(int x)
 {
-    bits[hash(numberInput)] = true;
+    bits[hash(x,0)] = bits[hash(x,1)] = true;
 }
 
-bool BloomFilter::contains(int numberInput)
+bool BloomFilter::contains(int x)
 {
     //Bit a false, impossible que hi sigui
-    if(!bits[hash(numberInput)]) return false;
+    if(!bits[hash(x,0)] || !bits[hash(x,1)]) return false;
 
     //Es probable que numberInput estigui contingut
     ++positivesCount;
     return true;
 }
 
-int BloomFilter::hash(int numberInput)
+int BloomFilter::hash(int x, int i)
 {
-    return numberInput % bits.size();
+    return (x/(m*i+1)) % m;
 }
 
 void BloomFilter::printExtras(void *extra)
 {
     int realPositivesCount = *((int*) extra);
-    std::cout << "Tant percent de falsos positius: " << (float(positivesCount)/realPositivesCount - 1.0f)*100.0f << "%" << std::endl;
+    std::cout << "Tant percent d'encerts: " << (float(realPositivesCount)/positivesCount)*100.0f << "%" << std::endl;
 }

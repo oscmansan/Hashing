@@ -31,7 +31,6 @@ int main(int argc, char **argv)
     ifstream inText(argv[2]); //Llegir paraules text fins eof
     while (inText >> n) textWords.push_back(n);
 
-
     cout << dictWords.size() << endl;
     cout << textWords.size() << endl << endl;
     /////////////////////////////////////////////////////
