@@ -30,5 +30,7 @@ int BloomFilter::hash(int x, int i)
 void BloomFilter::printExtras(void *extra)
 {
     int realPositivesCount = *((int*) extra);
-    std::cout << "Tant percent d'encerts: " << (float(realPositivesCount)/positivesCount)*100.0f << "%" << std::endl;
+    cout << (float(realPositivesCount)/positivesCount)*100.0f;
+    
+    //std::cout << "Tant percent d'encerts: " << (float(realPositivesCount)/positivesCount)*100.0f << "%" << std::endl;
 }

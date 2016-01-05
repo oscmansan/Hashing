@@ -31,8 +31,9 @@ int main(int argc, char **argv)
     ifstream inText(argv[2]); //Llegir paraules text fins eof
     while (inText >> n) textWords.push_back(n);
 
+    /*cout << "Tamany entrada" << endl;
     cout << dictWords.size() << endl;
-    cout << textWords.size() << endl << endl;
+    cout << textWords.size() << endl << endl;*/
     /////////////////////////////////////////////////////
 
     // CREAR DICCIONARIS ////////////////////////////////
@@ -49,6 +50,8 @@ int main(int argc, char **argv)
     int realCount = 0;
     bool f = true;
 
+    //cout << "Algorisme\tTemps insercio\tTemps comprovacio" << endl;
+
     for(Dictionary *d : dics)
     {
         start = clock();
@@ -57,7 +60,7 @@ int main(int argc, char **argv)
         d->onAllInserted();
 
         seconds = double(clock() - start) / CLOCKS_PER_SEC;
-        cout << "Temps que triga el " << d->name << " en insertar: " << seconds << " segons." << endl;
+        cout <<  d->name << "\t" << seconds ;
         //cout << endl << endl << endl;
 
         start = clock();
@@ -78,7 +81,7 @@ int main(int argc, char **argv)
         //cout << "___________________" << endl;
 
         seconds = double(clock() - start) / CLOCKS_PER_SEC;
-        cout << "Temps que triga el " << d->name << " en comprovar paraules text: " << seconds << " segons. Count: " << count  << endl;
+        cout << "\t" << seconds << "\t";
         //cout << endl << endl << endl;
 	
         d->printExtras(&realCount);

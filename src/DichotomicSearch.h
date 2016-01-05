@@ -10,9 +10,10 @@ class DichotomicSearch : public Dictionary
 {
 private:
     vector<int> elements;
-    void quickSort(vector<int> &arr, int l, int r);
-    int  quickSortPartition(vector<int> &arr, int l, int r);
+    void quickSort(int l, int r);
+    int  quickSortPartition(int l, int r);
     bool search(int  k, int l, int r);
+    long long compares;
 
 public:
 
@@ -25,6 +26,8 @@ public:
     bool contains(int k);
 
     void onAllInserted();
+
+    void printExtras(void *extra);
 };
 
 #endif // DICHOTOMICSEARCH_H

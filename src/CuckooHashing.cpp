@@ -98,6 +98,5 @@ void CuckooHashing::printResult() {
 }
 
 void CuckooHashing::printExtras(void *extra) {
-    cout << "bounces = " << bounces << endl;
-    cout << "rehashes = " << i << endl;
+    cout <<  bounces << "\t" << i;
 }

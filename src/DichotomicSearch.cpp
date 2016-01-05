@@ -3,39 +3,43 @@
 #include <algorithm>
 using namespace std;
     
-DichotomicSearch::DichotomicSearch() : Dictionary("DichotomicSearch") { }
+DichotomicSearch::DichotomicSearch() : Dictionary("DichotomicSearch"), compares(0) { }
 
 void DichotomicSearch::insert(int k) 
 {
     elements.push_back(k);
 }
 
-int DichotomicSearch::quickSortPartition (vector<int> &arr, int l, int r)
+int DichotomicSearch::quickSortPartition (int l, int r)
 {
-    int x = arr[r]; 
-    int i = (l - 1); 
+
+    int p = l;
+    int pivotElement = elements[l];
  
-    for (int j = l; j <= r - 1; j++)
+    for(int i = l+1 ; i <= r ; i++)
     {
-        if (arr[j] <= x)
+        /* If you want to sort the list in the other order, change "<=" to ">" */
+        ++compares;
+        if(elements[i] <= pivotElement)
         {
-            i++;    
-            swap(arr[i], arr[j]); 
+            p++;
+            swap(elements[i], elements[p]);
         }
     }
-
-    swap(arr[i + 1], arr[r]);  
-    return (i + 1);
+ 
+    swap(elements[p], elements[l]);
+ 
+    return p;
 }
  
 
-void DichotomicSearch::quickSort(vector<int> &arr, int l, int r)
+void DichotomicSearch::quickSort(int l, int r)
 {
     if (l < r)
     {
-        int pivot_index = quickSortPartition(arr, l, r); 
-        quickSort(arr, l, pivot_index - 1);
-        quickSort(arr, pivot_index + 1, r);
+        int pivot_index = quickSortPartition(l, r); 
+        quickSort(l, pivot_index - 1);
+        quickSort(pivot_index + 1, r);
     }
 }
 
@@ -45,9 +49,12 @@ bool DichotomicSearch::search(int k, int l, int r)
 	if (r < l) return false;
 
 	int p = l + (r-l)/2;
+    ++compares;
 	if (elements[p] == k) return true;
-	if (elements[p] <  k) return search(k, p+1, r);
-	if (elements[p] >  k) return search(k, l, p-1);
+	++compares;
+    if (elements[p] <  k) return search(k, p+1, r);
+	++compares;
+    if (elements[p] >  k) return search(k, l, p-1);
 }
 
 bool DichotomicSearch::contains(int k) 
@@ -57,6 +64,10 @@ bool DichotomicSearch::contains(int k)
 
 void DichotomicSearch::onAllInserted() 
 {
-    //quickSort(elements, 0, elements.size());
-    sort(elements.begin(), elements.end());
+    quickSort(0, elements.size());
+    //sort(elements.begin(), elements.end());
+}
+
+void DichotomicSearch::printExtras(void *extra) {
+    cout <<  compares;
 }
