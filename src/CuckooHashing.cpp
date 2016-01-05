@@ -13,56 +13,61 @@ CuckooHashing::CuckooHashing(int M) : Dictionary("CuckooHashing") {
     T2 = vector<int>(m,-1);
 }
 
-void CuckooHashing::insert(int k) {
-	data.push_back(k);
-
-	int jumps = 0;
-	while ()
-	bool b = insert(k,0);
-	while (not b) {
-		++i;
+void CuckooHashing::insert(int k) 
+{
+    data.push_back(k);
+    bool b = insert(k,0);
+    while (not b) {
+        i++;
 		T1 = vector<int>(m,-1);
 		T2 = vector<int>(m,-1);
 
-		bool valid_rehash = true;
-		for (int x : data) {
-			if (not insert(x,0)) {
-				valid_rehash = false;
-				break;
-			}
-		}
-
-		b = valid_rehash;
-	}
+        bool valid_rehash = true;
+        for (int x : data) {
+            if (not insert(x,0)) {
+                valid_rehash = false;
+                 break;
+            }
+        }
+        b = valid_rehash;
+    }
 }
 
-bool CuckooHashing::insert(int x, int n) {
-	if (n < 100000) {
-		int hx = hash(x,true);
-		if(T1[hx] == -1) {
-			T1[hx] = x;
-		}
-		else {
-			++bounces;
-			int y = T1[hx];
-			int hy = hash(y,false);
-			T1[hx] = x;
-			if (T2[hy] == -1) {
-				T2[hy] = y;
-			}
-			else {
-				++bounces;
-				int z = T2[hy];
-				T2[hy] = y;
-				return insert(z,n+1);
-			}
-		}
-		return true;
-	}
-	else {
-	//cout << "infinite loop when inserting " << x << endl;
-		return false;
-	}
+bool CuckooHashing::insert(int xx, int n)
+{
+    int x = xx;
+    int initialBounces = bounces;
+    while(bounces - initialBounces < 10000000)
+    {
+        int h1 = hash(x, true);
+        //cout << h1 << endl;
+        if(T1[h1] == -1)
+        {
+            T1[h1] = x;
+            return true;
+        }
+        else
+        {
+            int last1 = T1[h1];
+            T1[h1] = x; //replace
+            ++bounces;
+
+            int h2 = hash(last1, false);
+            //cout << h2 << endl;
+            if (T2[h2] == -1)
+            {
+                T2[h2] = last1;
+                return true;
+            }
+            else
+            {
+                ++bounces;
+                x = T2[h2];
+                T2[h2] = last1;
+            }
+        }
+    }
+    return false;
 }
 
 bool CuckooHashing::contains(int k) {
@@ -75,7 +80,7 @@ int CuckooHashing::hash(int k, bool t) {
 	if (t)
 		return (k*(i+1)) % m;
 	else
-		return (k*(i+1)/m) % m;
+        return (int(sin(k*i)*0.5+0.5)*m + int(cos(i)*0.5+0.5)*k) % m;
 }
 
 void CuckooHashing::printResult() {

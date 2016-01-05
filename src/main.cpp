@@ -56,6 +56,7 @@ int main(int argc, char **argv)
     {
         start = clock();
 
+        cout << "WWooWW" << endl;
         for(int dw : dictWords) d->insert(dw);
         d->onAllInserted();
 
