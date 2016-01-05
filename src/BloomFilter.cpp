@@ -2,7 +2,7 @@
 
 BloomFilter::BloomFilter(int n) : Dictionary("BloomFilter")
 {
-    m = n*32;
+    m = n*8;
     bits = vector<bool>(m, false);
     positivesCount = 0;
 }
@@ -30,7 +30,8 @@ int BloomFilter::hash(int x, int i)
 void BloomFilter::printExtras(void *extra)
 {
     int realPositivesCount = *((int*) extra);
-    cout << (float(realPositivesCount)/positivesCount)*100.0f;
-    
-    //std::cout << "Tant percent d'encerts: " << (float(realPositivesCount)/positivesCount)*100.0f << "%" << std::endl;
+    std::cout << float(positivesCount-realPositivesCount)/positivesCount;
+    /*std::cout << "Tant per cent de falsos positius: " <<
+                 (float(positivesCount-realPositivesCount)/positivesCount) * 100.0f
+              << "%" << std::endl;*/
 }

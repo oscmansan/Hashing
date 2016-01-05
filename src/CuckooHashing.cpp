@@ -14,63 +14,68 @@ CuckooHashing::CuckooHashing(int M) : Dictionary("CuckooHashing") {
 }
 
 void CuckooHashing::insert(int k) {
-    data.push_back(k);
-    bool b = insert(k,0);
-    while (not b) {
-	++i;
-	T1 = vector<int>(m,-1);
-	T2 = vector<int>(m,-1);
+	data.push_back(k);
 
-	bool valid_rehash = true;
-	for (int x : data) {
-	    if (not insert(x,0)) {
-		valid_rehash = false;
-		break;
-	    }
+	int jumps = 0;
+	while ()
+	bool b = insert(k,0);
+	while (not b) {
+		++i;
+		T1 = vector<int>(m,-1);
+		T2 = vector<int>(m,-1);
+
+		bool valid_rehash = true;
+		for (int x : data) {
+			if (not insert(x,0)) {
+				valid_rehash = false;
+				break;
+			}
+		}
+
+		b = valid_rehash;
 	}
-	
-	b = valid_rehash;
-    }
 }
 
 bool CuckooHashing::insert(int x, int n) {
-    if (n < 100) {
-	if(T1[hash(x,true)] == -1) {
-	    T1[hash(x,true)] = x;
+	if (n < 100000) {
+		int hx = hash(x,true);
+		if(T1[hx] == -1) {
+			T1[hx] = x;
+		}
+		else {
+			++bounces;
+			int y = T1[hx];
+			int hy = hash(y,false);
+			T1[hx] = x;
+			if (T2[hy] == -1) {
+				T2[hy] = y;
+			}
+			else {
+				++bounces;
+				int z = T2[hy];
+				T2[hy] = y;
+				return insert(z,n+1);
+			}
+		}
+		return true;
 	}
 	else {
-	    ++bounces;
-	    int y = T1[hash(x,true)];
-	    T1[hash(x,true)] = x;
-	    if (T2[hash(y,false)] == -1) {
-		T2[hash(y,false)] = y;
-	    }
-	    else {
-		++bounces;
-		int z = T2[hash(y,false)];
-		T2[hash(y,false)] = y;
-		return insert(z,n+1);
-	    }
-	}
-	return true;
-    }
-    else {
 	//cout << "infinite loop when inserting " << x << endl;
-	return false;
-    }
+		return false;
+	}
 }
 
 bool CuckooHashing::contains(int k) {
-    if (T1[hash(k,true)] == k) return true;
-    else if (T2[hash(k,false)] == k) return true;
-    else return false;
+	if (T1[hash(k,true)] == k) return true;
+	else if (T2[hash(k,false)] == k) return true;
+	else return false;
 }
 
 int CuckooHashing::hash(int k, bool t) {
-    if (t)
-	return (k*(i+1)) % m;
-    else
-	return (k*(i+1)/m) % m;
+	if (t)
+		return (k*(i+1)) % m;
+	else
+		return (k*(i+1)/m) % m;
 }
 
 void CuckooHashing::printResult() {
@@ -98,5 +103,5 @@ void CuckooHashing::printResult() {
 }
 
 void CuckooHashing::printExtras(void *extra) {
-    cout <<  bounces << "\t" << i;
+	cout <<  bounces << "\t" << i;
 }
